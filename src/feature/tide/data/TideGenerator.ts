@@ -35,10 +35,10 @@ const getTideData = (tideText: string, startIndex: number): TideInfo[] => {
     });
 };
 
-const textToJson = (text: string): JmaTide[] => {
+const textToJson = (text: string): JmaTide => {
   const tideTexts = text.split("\n");
 
-  const ret: JmaTide[] = [];
+  const ret: JmaTide = {};
 
   tideTexts.forEach((tideText) => {
     const date = dayjs(
@@ -56,14 +56,11 @@ const textToJson = (text: string): JmaTide[] => {
     const highTide = getTideData(tideText, 80);
     const lowTide = getTideData(tideText, 108);
 
-    const JmaTide: JmaTide = {
-      [date.format("YYYY-MM-DD")]: {
-        tidePerHour,
-        highTide,
-        lowTide,
-      },
+    ret[date.format("YYYY-MM-DD")] = {
+      tidePerHour,
+      highTide,
+      lowTide,
     };
-    ret.push(JmaTide);
   });
 
   return ret;

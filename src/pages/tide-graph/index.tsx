@@ -3,12 +3,11 @@ import { NextPage } from "next";
 import tideData from "../../feature/tide/data/json/2022_hososhima.json";
 
 import { Line } from "@nivo/line";
+import { JmaTide } from "../../@types/tide";
 
 const TideGraph: NextPage = () => {
   const today = dayjs().format("YYYY-MM-DD");
-  const tideDataForToday = tideData.find(
-    (value) => Object.keys(value)[0] === today
-  );
+  const tideDataForToday = (tideData as JmaTide)[today];
 
   const commonProperties = {
     width: 900,
@@ -28,31 +27,37 @@ const TideGraph: NextPage = () => {
         curve="monotoneX"
         data={[
           {
-            id: "fake corp. A",
-            data: [
-              { x: 0, y: 7 },
-              { x: 1, y: 5 },
-              { x: 2, y: 11 },
-              { x: 3, y: 9 },
-              { x: 4, y: 13 },
-              { x: 7, y: 16 },
-              { x: 9, y: 12 },
-            ],
+            id: "tide",
+            data: tideDataForToday.tidePerHour.map((value, index) => ({
+              x: index,
+              y: value,
+            })),
           },
         ]}
         xScale={{
           type: "linear",
           min: 0,
-          max: "auto",
+          max: 23,
+          nice: true,
+        }}
+        yScale={{
+          type: "linear",
+          min: 0,
+          max: 240,
         }}
         axisLeft={{
-          legend: "linear scale",
+          legend: "Tide(cm)",
           legendOffset: 12,
         }}
         axisBottom={{
-          legend: "linear scale",
+          legend: "Time",
           legendOffset: -12,
         }}
+        lineWidth={4}
+        enableArea={true}
+        enablePoints={false}
+        gridXValues={[0, 3, 6, 9, 12, 15, 18, 21, 24]}
+        colors={{ scheme: "blues" }}
       />
     </>
   );
