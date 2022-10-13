@@ -1,13 +1,12 @@
+export type TideInfo = {
+  time: `${string}:${string}`;
+  tide: number;
+};
+
 export type JmaTide = {
   [date: string]: {
     tidePerHour: number[];
-    highTide: {
-      time: number;
-      tide: number;
-    }[];
-    lowTide: {
-      time: number;
-      tide: number;
-    }[];
+    highTide: TideInfo[];
+    lowTide: TideInfo[];
   };
 };
