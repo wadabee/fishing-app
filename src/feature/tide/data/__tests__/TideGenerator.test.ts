@@ -155,4 +155,9 @@ describe("TideGenerator", () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  // FIXME: must be delete
+  test("Temporary", () => {
+    TideGenerator.generateAll();
+  });
 });

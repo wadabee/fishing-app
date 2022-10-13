@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { JmaTide, TideInfo } from "../../../@types/tide";
 import _, { add } from "lodash";
+import { readFile, writeFile } from "fs/promises";
 
 const formatTime = (hour: string, minite: string): TideInfo["time"] => {
   return `${hour.replace(" ", "0")}:${minite.replace(" ", "0")}`;
@@ -70,7 +71,18 @@ const textToJson = (text: string): JmaTide[] => {
 
 const TideGenerator = {
   textToJson,
-  generateAll: () => {},
+  generateAll: () => {
+    console.log("START : Tide Generator");
+
+    console.log();
+    readFile(`${__dirname}/txt/2022_hososhima.txt`).then((value) => {
+      const json = textToJson(value.toString());
+
+      writeFile(`${__dirname}/json/2022_hososhima.json`, JSON.stringify(json));
+    });
+
+    console.log("END : Tide Generator");
+  },
 };
 
 export default TideGenerator;
