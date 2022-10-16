@@ -27,6 +27,21 @@ describe("TideGenerator", () => {
       expect(Object.values(actual)[0].tidePerHour).toEqual(expected);
     });
 
+    test("if next day exists, push 0:00 data in next day", () => {
+      const DATA =
+        "  1  2  3  4  5  6  7  8  9 101111121131141151161171181191202212222232242212 3Z610101001020200103030010 4 14 2 1  11212 1212303001240400" +
+        "\n" +
+        "301  2  3  4  5  6  7  8  9 101111121131141151161171181191202212222232242212 4Z610101001020200103030010 4 14 2 1  11212 1212303001240400";
+
+      const expected = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 111, 112, 113, 114, 115, 116, 117, 118,
+        119, 120, 221, 222, 223, 224, 301,
+      ];
+
+      const actual = TideGenerator.textToJson(DATA);
+      expect(Object.values(actual)[0].tidePerHour).toEqual(expected);
+    });
+
     test("set highTide, time is padding zero, char 81-108", () => {
       const DATA =
         "  1  2  3  4  5  6  7  8  9 101111121131141151161171181191202212222232242212 3Z6 2101001020200103030010 4 14 2 1  11212 1212303001240400";

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { JmaTide, TideInfo } from "../../../@types/tide";
-import _, { add } from "lodash";
 import { readFile, writeFile } from "fs/promises";
+import _ from "lodash";
+import { JmaTide, TideInfo } from "../../../@types/tide";
 
 const formatTime = (hour: string, minite: string): TideInfo["time"] => {
   return `${hour.replace(" ", "0")}:${minite.replace(" ", "0")}`;
@@ -40,7 +40,7 @@ const textToJson = (text: string): JmaTide => {
 
   const ret: JmaTide = {};
 
-  tideTexts.forEach((tideText) => {
+  tideTexts.forEach((tideText, index) => {
     const date = dayjs(
       new Date(
         2000 + Number.parseInt(tideText.substring(72, 74)),
@@ -52,6 +52,11 @@ const textToJson = (text: string): JmaTide => {
     const tidePerHour: number[] = _.range(24).map((hour) => {
       return Number.parseInt(tideText.substring(hour * 3, (hour + 1) * 3));
     });
+
+    // if exists next day, push 0:00 data in next day
+    if (index + 1 < tideTexts.length) {
+      tidePerHour.push(Number.parseInt(tideTexts[index + 1].substring(0, 3)));
+    }
 
     const highTide = getTideData(tideText, 80);
     const lowTide = getTideData(tideText, 108);
