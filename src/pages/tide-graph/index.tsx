@@ -10,11 +10,17 @@ const TideGraph: NextPage = () => {
   const today = dayjs().format("YYYY-MM-DD");
   const tideDataForToday = (tideData as JmaTide)[today];
 
+  const nowHour = Number.parseInt(dayjs().format("H"));
+  const nowMinite = Number.parseInt(dayjs().format("m"));
+
   return (
     <>
       Tide Graph
       {JSON.stringify(tideDataForToday)}
       <ReactECharts
+        style={{
+          height: "50vh",
+        }}
         option={{
           xAxis: {
             name: "Time",
@@ -47,22 +53,45 @@ const TideGraph: NextPage = () => {
               },
               markPoint: {
                 symbol: "path://M0 0 L10 0 L10 10 L7 10 L5 13 L3 10 L0 10 Z",
-                data: tideDataForToday.highTide
-                  .concat(tideDataForToday.lowTide)
-                  .map((value) => {
-                    const hour = Number.parseInt(value.time.split(":")[0]);
-                    const minite = Number.parseInt(value.time.split(":")[1]);
-                    const x = hour + minite / 60;
+                data: [
+                  ...tideDataForToday.highTide
+                    .concat(tideDataForToday.lowTide)
+                    .map((value) => {
+                      const hour = Number.parseInt(value.time.split(":")[0]);
+                      const minite = Number.parseInt(value.time.split(":")[1]);
+                      const x = hour + minite / 60;
 
-                    return {
-                      label: {
-                        offset: [0, -5],
-                      },
-                      value: `${value.time}\n${value.tide}cm`,
-                      coord: [x, value.tide],
-                      symbolOffset: [0, -28],
-                    };
-                  }),
+                      return {
+                        label: {
+                          offset: [0, -5],
+                        },
+                        value: `${value.time}\n${value.tide}cm`,
+                        coord: [x, value.tide],
+                        symbolOffset: [0, -28],
+                      };
+                    }),
+                  {
+                    symbol: "arrow",
+                    symbolSize: 20,
+                    coord: [
+                      nowHour + nowMinite / 60,
+                      tideDataForToday.tidePerHour[nowHour],
+                    ],
+                    itemStyle: {
+                      color: "#E83015",
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              markPoint: {
+                symbol: "pin",
+                data: [
+                  {
+                    coord: [10, 10],
+                  },
+                ],
               },
             },
           ],
