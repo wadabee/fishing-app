@@ -1,3 +1,4 @@
+import LoginIcon from "@mui/icons-material/Login";
 import { LoadingButton } from "@mui/lab";
 import {
   Alert,
@@ -33,7 +34,6 @@ const Login = () => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
         router.push("/");
       })
       .catch((error) => {
@@ -46,13 +46,13 @@ const Login = () => {
   }, [email, password, router]);
 
   return (
-    <Box sx={{ m: 3 }}>
+    <Box sx={{ pt: 5 }}>
       <Grid container justifyContent="center">
         <Grid item xl={6} lg={7} md={8} sm={10} xs={12}>
           <Card>
             <CardContent>
               <Typography marginBottom={3} variant="h5">
-                Fishing-App Login
+                Login
               </Typography>
 
               <Stack spacing={2}>
@@ -82,6 +82,7 @@ const Login = () => {
                 disabled={!canLogin}
                 loading={loading}
                 loadingPosition="start"
+                startIcon={<LoginIcon />}
                 onClick={() => {
                   onLogin();
                 }}
