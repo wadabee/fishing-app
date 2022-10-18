@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import PageBase from "./pageBase";
+import PageBase from "../commons/pages/pageBase";
 
 function MyApp(props: AppProps) {
   return (

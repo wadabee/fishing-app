@@ -7,7 +7,7 @@ import { Box } from "@mui/system";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import firebase from "../firebase";
+import firebase from "../../firebase";
 
 const PageBase = ({ Component, pageProps }: AppProps) => {
   const [hasAuthenticated, setHasAuthenticated] = useState(true);
