@@ -64,12 +64,14 @@ const Login = () => {
                   label="e-mail"
                   type="email"
                   value={email}
+                  disabled={loading}
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
                   label="password"
                   type="password"
                   value={password}
+                  disabled={loading}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Stack>
