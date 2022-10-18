@@ -1,11 +1,12 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import { AppProps } from "next/app";
 
+import { Logout } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box } from "@mui/system";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import firebase from "../firebase";
 
 const PageBase = ({ Component, pageProps }: AppProps) => {
@@ -23,6 +24,12 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
     }
   });
 
+  const onLogout = useCallback(() => {
+    signOut(auth).then(() => {
+      router.push("/login");
+    });
+  }, [auth, router]);
+
   return (
     <>
       <AppBar position="fixed">
@@ -32,7 +39,6 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
               size="large"
               edge="start"
               color="inherit"
-              aria-label="menu"
               sx={{ mr: 2 }}
             >
               <MenuIcon />
@@ -41,6 +47,18 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Fishing App
           </Typography>
+          {hasAuthenticated ? (
+            <Button
+              size="large"
+              color="inherit"
+              endIcon={<Logout />}
+              onClick={() => {
+                onLogout();
+              }}
+            >
+              LOGOUT
+            </Button>
+          ) : null}
         </Toolbar>
       </AppBar>
       <Box sx={{ mt: 7 }}>
