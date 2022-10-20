@@ -5,9 +5,16 @@ const Home: NextPage = () => {
   return (
     <>
       <div>Home</div>
-      <Link href="/tide-graph">
-        <a>Tide Graph</a>
-      </Link>
+      <div>
+        <Link href="/tackle/register">
+          <a>Tackle Registration</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/tide-graph">
+          <a>Tide Graph</a>
+        </Link>
+      </div>
     </>
   );
 };
