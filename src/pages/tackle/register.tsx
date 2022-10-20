@@ -37,6 +37,9 @@ const TackleRegister: NextPage = () => {
         needle: "Needle",
       },
       {
+        float: "Float",
+      },
+      {
         lure: "Lure",
       },
     ];
