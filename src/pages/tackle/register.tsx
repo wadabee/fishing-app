@@ -13,7 +13,7 @@ import { RtdbSchema, TackleType } from "../../@types/rtdb";
 import TackleRepo from "../../repository/tackleRepo";
 
 const TackleRegister: NextPage = () => {
-  const tackleTypes = useMemo(() => {
+  const tackleTypes = useMemo<{ [key in TackleType]?: string }[]>(() => {
     return [
       {
         method: "Method",
@@ -41,6 +41,9 @@ const TackleRegister: NextPage = () => {
       },
       {
         lure: "Lure",
+      },
+      {
+        bait: "Bait",
       },
     ];
   }, []);
