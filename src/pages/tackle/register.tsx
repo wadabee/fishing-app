@@ -10,6 +10,7 @@ import _ from "lodash";
 import { NextPage } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RtdbSchema, TackleType } from "../../@types/rtdb";
+import PageHeader from "../../commons/components/PageHeader";
 import TackleRepo from "../../repository/tackleRepo";
 
 const TackleRegister: NextPage = () => {
@@ -105,6 +106,7 @@ const TackleRegister: NextPage = () => {
 
   return (
     <>
+      <PageHeader>Tackle Registration</PageHeader>
       {tackleTypes.map((tackleType) => {
         const [key, label]: [TackleType, string] = Object.entries(
           tackleType
