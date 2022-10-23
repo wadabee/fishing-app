@@ -1,22 +1,33 @@
 import { Card, CardActions, CardContent, TextField } from "@mui/material";
 import dayjs from "dayjs";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Weather } from "../../@types/rtdb";
 import ButtonRegister from "../../commons/components/ButtonRegister";
 import InputFiveLevel from "../../commons/components/InputFiveLevel";
 import InputWeather from "../../commons/components/InputWeather";
 import PageHeader from "../../commons/components/PageHeader";
+import FishingRecordRepo from "../../repository/FishingRecordRepo";
 
 const FishingStart: NextPage = () => {
   const [startDatetime, setStartDatetime] = useState(
     dayjs().format("YYYY-MM-DDTHH:mm:ss")
   );
-
   const [weather, setWeather] = useState<Weather>("sunny");
   const [wind, setWind] = useState<number>(1);
   const [wave, setWave] = useState<number>(1);
   const [turbidity, setTurbidity] = useState<number>(1);
+
+  const onRegister = useCallback(() => {
+    console.log("register");
+    FishingRecordRepo.registerStart({
+      startDatetime,
+      turbidity,
+      weather,
+      wave,
+      wind,
+    });
+  }, [startDatetime, turbidity, wave, weather, wind]);
 
   return (
     <>
@@ -65,7 +76,7 @@ const FishingStart: NextPage = () => {
           />
         </CardContent>
         <CardActions>
-          <ButtonRegister onClick={() => {}} />
+          <ButtonRegister onClick={onRegister} />
         </CardActions>
       </Card>
     </>

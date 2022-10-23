@@ -20,14 +20,14 @@ export type RtdbSchema = {
   };
   record: {
     [date in string]: {
-      [index: string]: {
+      [key in string]: {
         startDatetime: string;
         endDatetime: string;
         weather: Weather;
         wind: number;
         wave: number;
         turbidity: number;
-        tackle: {
+        tackle?: {
           [key in TackleType]: {
             [id in string]: string;
           }[];
@@ -56,7 +56,7 @@ export type RtdbSchema = {
             name: string;
             quantity: number;
           };
-        };
+        }[];
       };
     };
   };
