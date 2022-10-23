@@ -1,4 +1,5 @@
 import { Card, CardActions, CardContent, TextField } from "@mui/material";
+import dayjs from "dayjs";
 import { NextPage } from "next";
 import { useState } from "react";
 import { Weather } from "../../@types/rtdb";
@@ -8,6 +9,10 @@ import InputWeather from "../../commons/components/InputWeather";
 import PageHeader from "../../commons/components/PageHeader";
 
 const FishingStart: NextPage = () => {
+  const [startDatetime, setStartDatetime] = useState(
+    dayjs().format("YYYY-MM-DDTHH:mm:ss")
+  );
+
   const [weather, setWeather] = useState<Weather>("sunny");
   const [wind, setWind] = useState<number>(1);
   const [wave, setWave] = useState<number>(1);
@@ -19,7 +24,14 @@ const FishingStart: NextPage = () => {
 
       <Card>
         <CardContent>
-          <TextField label="start-datetime" type="datetime-local" />
+          <TextField
+            label="start-datetime"
+            type="datetime-local"
+            value={startDatetime}
+            onChange={(e) => {
+              setStartDatetime(e.target.value);
+            }}
+          />
 
           <InputWeather
             value={weather}
