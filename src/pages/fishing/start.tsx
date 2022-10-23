@@ -19,7 +19,6 @@ const FishingStart: NextPage = () => {
   const [turbidity, setTurbidity] = useState<number>(1);
 
   const onRegister = useCallback(() => {
-    console.log("register");
     FishingRecordRepo.registerStart({
       startDatetime,
       turbidity,
