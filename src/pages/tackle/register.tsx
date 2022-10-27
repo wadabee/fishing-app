@@ -10,6 +10,7 @@ import _ from "lodash";
 import { NextPage } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RtdbSchema, TackleType } from "../../@types/rtdb";
+import ButtonRegister from "../../commons/components/ButtonRegister";
 import PageHeader from "../../commons/components/PageHeader";
 import TackleRepo from "../../repository/tackleRepo";
 
@@ -144,15 +145,11 @@ const TackleRegister: NextPage = () => {
               >
                 ADD
               </Button>
-              <Button
-                variant="contained"
-                color="success"
+              <ButtonRegister
                 onClick={() => {
                   onRegister(key);
                 }}
-              >
-                REGISTER
-              </Button>
+              />
             </CardActions>
           </Card>
         );

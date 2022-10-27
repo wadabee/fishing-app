@@ -51,7 +51,7 @@ const Login = () => {
         <Grid item xl={6} lg={7} md={8} sm={10} xs={12}>
           <Card>
             <CardContent>
-              <Typography marginBottom={3} variant="h5">
+              <Typography marginBottom={3} variant="h5" component="div">
                 Login
               </Typography>
 

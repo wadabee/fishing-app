@@ -11,6 +11,11 @@ const Home: NextPage = () => {
         </Link>
       </div>
       <div>
+        <Link href="/fishing/start">
+          <a>START</a>
+        </Link>
+      </div>
+      <div>
         <Link href="/tide-graph">
           <a>Tide Graph</a>
         </Link>

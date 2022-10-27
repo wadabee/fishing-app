@@ -5,12 +5,12 @@ type Props = {
   children: React.ReactNode;
 };
 
-const PageHeader: React.FC<Props> = ({ children }) => {
+const SubHeader: React.FC<Props> = ({ children }) => {
   return (
-    <Typography variant="h4" component="div">
+    <Typography variant="h5" component="div">
       {children}
     </Typography>
   );
 };
 
-export default PageHeader;
+export default SubHeader;
