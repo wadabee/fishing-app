@@ -7,10 +7,14 @@ import { Box } from "@mui/system";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 import firebase from "../../firebase";
+import drawerState from "../../recoil/drawer";
+import AppDrawer from "../components/AppDrawer";
 
 const PageBase = ({ Component, pageProps }: AppProps) => {
   const [hasAuthenticated, setHasAuthenticated] = useState(true);
+  const setOpen = useSetRecoilState(drawerState.open);
 
   const router = useRouter();
 
@@ -42,6 +46,9 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
               edge="start"
               color="inherit"
               sx={{ mr: 2 }}
+              onClick={() => {
+                setOpen(true);
+              }}
             >
               <MenuIcon />
             </IconButton>
@@ -63,6 +70,7 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
           ) : null}
         </Toolbar>
       </AppBar>
+      <AppDrawer />
       <Box sx={{ mt: 7 }}>
         <Component {...pageProps} />
       </Box>

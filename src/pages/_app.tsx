@@ -1,10 +1,13 @@
 import type { AppProps } from "next/app";
+import { RecoilRoot } from "recoil";
 import PageBase from "../commons/pages/PageBase";
 
 function MyApp(props: AppProps) {
   return (
     <>
-      <PageBase {...props} />
+      <RecoilRoot>
+        <PageBase {...props} />
+      </RecoilRoot>
     </>
   );
 }
