@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import firebase from "../../firebase";
+import AppDrawer from "../components/AppDrawer";
 
 const PageBase = ({ Component, pageProps }: AppProps) => {
   const [hasAuthenticated, setHasAuthenticated] = useState(true);
@@ -63,6 +64,7 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
           ) : null}
         </Toolbar>
       </AppBar>
+      <AppDrawer />
       <Box sx={{ mt: 7 }}>
         <Component {...pageProps} />
       </Box>
