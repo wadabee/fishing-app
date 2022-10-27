@@ -7,6 +7,8 @@ import ButtonRegister from "../../commons/components/ButtonRegister";
 import InputFiveLevel from "../../commons/components/InputFiveLevel";
 import InputWeather from "../../commons/components/InputWeather";
 import PageHeader from "../../commons/components/PageHeader";
+import SubHeader from "../../commons/components/SubHeader";
+import TideGraph from "../../commons/components/TideGraph";
 import FishingRecordRepo from "../../repository/FishingRecordRepo";
 
 const FishingStart: NextPage = () => {
@@ -17,6 +19,8 @@ const FishingStart: NextPage = () => {
   const [wind, setWind] = useState<number>(1);
   const [wave, setWave] = useState<number>(1);
   const [turbidity, setTurbidity] = useState<number>(1);
+
+  const today = dayjs().format("YYYY-MM-DD");
 
   const onRegister = useCallback(() => {
     FishingRecordRepo.registerStart({
@@ -77,6 +81,13 @@ const FishingStart: NextPage = () => {
         <CardActions>
           <ButtonRegister onClick={onRegister} />
         </CardActions>
+      </Card>
+
+      <Card sx={{ mt: 3 }}>
+        <CardContent>
+          <SubHeader>Today&apos;s Tide Graph</SubHeader>
+          <TideGraph date={today} />
+        </CardContent>
       </Card>
     </>
   );
