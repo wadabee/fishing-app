@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { useMemo } from "react";
 import { JmaTide } from "../../@types/tide";
 
 import tideData from "../../feature/tide/data/json/2022_hososhima.json";
@@ -16,6 +16,18 @@ const TideGraph: React.FC<Props> = ({ date }) => {
 
   const nowHour = Number.parseInt(dayjs().format("H"));
   const nowMinite = Number.parseInt(dayjs().format("m"));
+
+  const symbolNow = useMemo<[number, number]>(() => {
+    const diffTide =
+      tideDataForToday.tidePerHour[nowHour + 1] -
+      tideDataForToday.tidePerHour[nowHour];
+
+    return [
+      nowHour + nowMinite / 60,
+      tideDataForToday.tidePerHour[nowHour] + diffTide * (nowMinite / 60),
+    ];
+  }, [nowHour, nowMinite, tideDataForToday.tidePerHour]);
+
   return (
     <ReactECharts
       style={{
@@ -72,10 +84,7 @@ const TideGraph: React.FC<Props> = ({ date }) => {
                 {
                   symbol: "arrow",
                   symbolSize: 20,
-                  coord: [
-                    nowHour + nowMinite / 60,
-                    tideDataForToday.tidePerHour[nowHour],
-                  ],
+                  coord: symbolNow,
                   itemStyle: {
                     color: "#E83015",
                   },
