@@ -6,7 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Box } from "@mui/system";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import firebase from "../../firebase";
 
 const PageBase = ({ Component, pageProps }: AppProps) => {
@@ -15,20 +15,22 @@ const PageBase = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   const auth = getAuth(firebase);
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setHasAuthenticated(true);
-    } else {
-      setHasAuthenticated(false);
-      router.push("/login");
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setHasAuthenticated(true);
+      } else {
+        setHasAuthenticated(false);
+        router.push("/login");
+      }
+    });
+  }, [auth, router]);
 
-  const onLogout = useCallback(() => {
+  const onLogout = () => {
     signOut(auth).then(() => {
       router.push("/login");
     });
-  }, [auth, router]);
+  };
 
   return (
     <>

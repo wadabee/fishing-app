@@ -6,7 +6,11 @@ type Props = {
 };
 
 const PageHeader: React.FC<Props> = ({ children }) => {
-  return <Typography variant="h4">{children}</Typography>;
+  return (
+    <Typography variant="h4" component="div">
+      {children}
+    </Typography>
+  );
 };
 
 export default PageHeader;
