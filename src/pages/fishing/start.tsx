@@ -1,7 +1,6 @@
 import { Card, CardActions, CardContent, TextField } from "@mui/material";
-import dayjs from "dayjs";
 import { NextPage } from "next";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Weather } from "../../@types/rtdb";
 import ButtonRegister from "../../commons/components/ButtonRegister";
 import InputFiveLevel from "../../commons/components/InputFiveLevel";
@@ -10,17 +9,18 @@ import PageHeader from "../../commons/components/PageHeader";
 import SubHeader from "../../commons/components/SubHeader";
 import TideGraph from "../../commons/components/TideGraph";
 import FishingRecordRepo from "../../repository/FishingRecordRepo";
+import { getNowDatetime } from "../../utils/DateUtils";
 
 const FishingStart: NextPage = () => {
-  const [startDatetime, setStartDatetime] = useState(
-    dayjs().format("YYYY-MM-DDTHH:mm:ss")
-  );
+  const [startDatetime, setStartDatetime] = useState(getNowDatetime());
   const [weather, setWeather] = useState<Weather>("sunny");
   const [wind, setWind] = useState<number>(1);
   const [wave, setWave] = useState<number>(1);
   const [turbidity, setTurbidity] = useState<number>(1);
 
-  const today = dayjs().format("YYYY-MM-DD");
+  const now = useMemo(() => {
+    return getNowDatetime();
+  }, []);
 
   const onRegister = useCallback(() => {
     FishingRecordRepo.registerStart({
@@ -86,7 +86,7 @@ const FishingStart: NextPage = () => {
       <Card sx={{ mt: 3 }}>
         <CardContent>
           <SubHeader>Today&apos;s Tide Graph</SubHeader>
-          <TideGraph date={today} />
+          <TideGraph datetime={now} />
         </CardContent>
       </Card>
     </>

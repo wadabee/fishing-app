@@ -1,21 +1,21 @@
-import dayjs from "dayjs";
 import React, { useMemo } from "react";
 import { JmaTide } from "../../@types/tide";
 
 import tideData from "../../feature/tide/data/json/2022_hososhima.json";
 
 import ReactECharts from "echarts-for-react";
+import { getDate, getHour, getMinute } from "../../utils/DateUtils";
 
 type Props = {
-  date: string;
+  datetime: string;
 };
 
-const TideGraph: React.FC<Props> = ({ date }) => {
-  const displayDate = dayjs(date).format("YYYY-MM-DD");
+const TideGraph: React.FC<Props> = ({ datetime }) => {
+  const displayDate = getDate(datetime);
   const tideDataForToday = (tideData as JmaTide)[displayDate];
 
-  const nowHour = Number.parseInt(dayjs().format("H"));
-  const nowMinite = Number.parseInt(dayjs().format("m"));
+  const nowHour = getHour(datetime);
+  const nowMinite = getMinute(datetime);
 
   const symbolNow = useMemo<[number, number]>(() => {
     const diffTide =
