@@ -53,10 +53,14 @@ const InputButtonGroup: React.FC<Props> = ({
       </ButtonGroup>
 
       {helpText || helpTextEnd ? (
-        <FormHelperText>
-          <Grid container justifyContent="space-between">
-            <Grid item>{helpText}</Grid>
-            <Grid item>{helpTextEnd}</Grid>
+        <FormHelperText component="div">
+          <Grid container justifyContent="space-between" component="div">
+            <Grid item component="div">
+              {helpText}
+            </Grid>
+            <Grid item component="div">
+              {helpTextEnd}
+            </Grid>
           </Grid>
         </FormHelperText>
       ) : null}

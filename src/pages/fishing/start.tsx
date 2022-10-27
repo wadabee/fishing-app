@@ -1,6 +1,6 @@
 import { Card, CardActions, CardContent, TextField } from "@mui/material";
 import { NextPage } from "next";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Weather } from "../../@types/rtdb";
 import ButtonRegister from "../../commons/components/ButtonRegister";
 import InputFiveLevel from "../../commons/components/InputFiveLevel";
@@ -12,14 +12,17 @@ import FishingRecordRepo from "../../repository/FishingRecordRepo";
 import { getNowDatetime } from "../../utils/DateUtils";
 
 const FishingStart: NextPage = () => {
-  const [startDatetime, setStartDatetime] = useState(getNowDatetime());
+  const [startDatetime, setStartDatetime] = useState("");
   const [weather, setWeather] = useState<Weather>("sunny");
   const [wind, setWind] = useState<number>(1);
   const [wave, setWave] = useState<number>(1);
   const [turbidity, setTurbidity] = useState<number>(1);
 
-  const now = useMemo(() => {
-    return getNowDatetime();
+  const [now, setNow] = useState("");
+
+  useEffect(() => {
+    setStartDatetime(getNowDatetime());
+    setNow(getNowDatetime());
   }, []);
 
   const onRegister = useCallback(() => {

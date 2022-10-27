@@ -12,12 +12,17 @@ type Props = {
 
 const TideGraph: React.FC<Props> = ({ datetime }) => {
   const displayDate = getDate(datetime);
-  const tideDataForToday = (tideData as JmaTide)[displayDate];
+  const tideDataForToday: JmaTide[string] | undefined = (tideData as JmaTide)[
+    displayDate
+  ];
 
   const nowHour = getHour(datetime);
   const nowMinite = getMinute(datetime);
 
   const symbolNow = useMemo<[number, number]>(() => {
+    if (!tideDataForToday) {
+      return [0, 0];
+    }
     const diffTide =
       tideDataForToday.tidePerHour[nowHour + 1] -
       tideDataForToday.tidePerHour[nowHour];
@@ -26,7 +31,11 @@ const TideGraph: React.FC<Props> = ({ datetime }) => {
       nowHour + nowMinite / 60,
       tideDataForToday.tidePerHour[nowHour] + diffTide * (nowMinite / 60),
     ];
-  }, [nowHour, nowMinite, tideDataForToday.tidePerHour]);
+  }, [nowHour, nowMinite, tideDataForToday]);
+
+  if (!tideDataForToday) {
+    return <>Loading...</>;
+  }
 
   return (
     <ReactECharts
