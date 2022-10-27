@@ -9,8 +9,12 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useMemo } from "react";
+import { useRecoilState } from "recoil";
+import drawerState from "../../recoil/drawer";
 
 const AppDrawer = () => {
+  const [open, setOpen] = useRecoilState(drawerState.open);
+
   const items = useMemo(() => {
     return [
       {
@@ -33,7 +37,13 @@ const AppDrawer = () => {
   }, []);
 
   return (
-    <Drawer anchor="left" open={true}>
+    <Drawer
+      anchor="left"
+      open={open}
+      onClose={() => {
+        setOpen(false);
+      }}
+    >
       <Box sx={{ width: 250 }}>
         <List>
           {items.map((item, idx) => {
