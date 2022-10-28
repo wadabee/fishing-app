@@ -1,9 +1,24 @@
 import dayjs from "dayjs";
-import { child, push, update } from "firebase/database";
+import { child, get, push, update } from "firebase/database";
 import { RtdbSchema, Weather } from "../@types/rtdb";
 import rtdb from "./rtdb";
 
 const FishingRecordRepo = {
+  getAll: (): Promise<RtdbSchema["record"] | undefined> => {
+    return new Promise((resolve, reject) => {
+      get(child(rtdb, "record"))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            resolve(snapshot.val());
+          } else {
+            resolve(undefined);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
   registerStart: (params: {
     startDatetime: string;
     weather: Weather;

@@ -3,6 +3,14 @@ import dayjs from "dayjs";
 const FORMAT_DATE = "YYYY-MM-DD";
 const FORMAT_DATETIME = "YYYY-MM-DD HH:mm:ss";
 
+export const formatDate = (
+  date: string,
+  fromFormat: string,
+  toFormat: string = FORMAT_DATE
+): string => {
+  return dayjs(date, fromFormat).format(toFormat);
+};
+
 export const getNowDatetime = (): string => {
   return dayjs().format(FORMAT_DATETIME);
 };
