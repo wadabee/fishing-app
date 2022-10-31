@@ -21,7 +21,7 @@ const AppDrawer = () => {
       {
         icon: <SetMeal />,
         label: "Fishing Recorder",
-        url: "/fishing/start",
+        url: "/fishing/list",
       },
       {
         icon: <ShowChart />,

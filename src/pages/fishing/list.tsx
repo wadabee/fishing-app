@@ -1,10 +1,11 @@
-import { Card, CardContent, Grid } from "@mui/material";
-import { Box } from "@mui/system";
+import { Button, Card, CardActions, CardContent, Grid } from "@mui/material";
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
 import { RtdbSchema } from "../../@types/rtdb";
 import IconFiveLevel from "../../commons/components/IconFiveLevel";
 import IconWeather from "../../commons/components/IconWeather";
+import LabeledContent from "../../commons/components/LabeledContent";
 import PageHeader from "../../commons/components/PageHeader";
 import SubHeader from "../../commons/components/SubHeader";
 import FishingRecordRepo from "../../repository/FishingRecordRepo";
@@ -21,6 +22,11 @@ const FishingList: NextPage = () => {
     });
   }, []);
 
+  const router = useRouter();
+  const onClickEnd = useCallback(() => {
+    router.push("/fishing/end");
+  }, [router]);
+
   if (!recordList) {
     return <>Loading...</>;
   }
@@ -36,7 +42,7 @@ const FishingList: NextPage = () => {
 
               {Object.entries(dateVal).map(([itemKey, item]) => {
                 return (
-                  <Card key={itemKey}>
+                  <Card key={itemKey} sx={{ mt: 2 }}>
                     <CardContent>
                       <SubHeader>
                         {formatDate(
@@ -53,32 +59,42 @@ const FishingList: NextPage = () => {
                       </SubHeader>
 
                       <Grid container alignItems="baseline">
-                        <Grid item xs={12}>
-                          <Box sx={{ display: "flex" }}>
-                            Weather:
+                        <Grid item xs={3}>
+                          <LabeledContent label="Weather">
                             <IconWeather weather={item.weather} />
-                          </Box>
+                          </LabeledContent>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Box sx={{ display: "flex" }}>
-                            Wind:
+                        <Grid item xs={3}>
+                          <LabeledContent label="Wind">
                             <IconFiveLevel level={item.wind} />
-                          </Box>
+                          </LabeledContent>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Box sx={{ display: "flex" }}>
-                            Wave:
+                        <Grid item xs={3}>
+                          <LabeledContent label="Wave">
                             <IconFiveLevel level={item.wave} />
-                          </Box>
+                          </LabeledContent>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Box sx={{ display: "flex" }}>
-                            Turbidity:
+                        <Grid item xs={3}>
+                          <LabeledContent label="Turbidity">
                             <IconFiveLevel level={item.turbidity} />
-                          </Box>
+                          </LabeledContent>
                         </Grid>
                       </Grid>
                     </CardContent>
+                    <CardActions>
+                      <Button variant="contained" color="primary">
+                        Catch
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => {
+                          onClickEnd();
+                        }}
+                      >
+                        End
+                      </Button>
+                    </CardActions>
                   </Card>
                 );
               })}

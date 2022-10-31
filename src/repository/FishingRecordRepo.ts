@@ -45,6 +45,17 @@ const FishingRecordRepo = {
       [`record/${day}/${key}`]: data,
     });
   },
+  registerEnd: (params: {
+    key: string;
+    startDatetime: string;
+    endDatetime: string;
+  }) => {
+    const day = dayjs(params.startDatetime).format("YYYYMMDD");
+
+    return update(rtdb, {
+      [`record/${day}/${params.key}/endDatetime`]: params.endDatetime,
+    });
+  },
 };
 
 export default FishingRecordRepo;
